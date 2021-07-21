@@ -1,5 +1,7 @@
-import { AppBar, Box, Button, createStyles, FormControl, makeStyles, MenuItem, Select, Theme, Toolbar, Typography } from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+import { AppBar, Box, Button, Chip, createStyles, FormControl, makeStyles, MenuItem, Select, Theme, Toolbar, Typography } from "@material-ui/core"
+import { ProgressContext } from "contexts/ProgressContext"
+import { ThemeContext } from "contexts/ThemeContext"
+import React, { useContext, useEffect, useState } from "react"
 import WelcomeMessage from "./WelcomeMessage"
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -12,6 +14,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 export default function NavBar() {
   //styles
   const classes = useStyles()
+
+  //context
+  const { lastTime, status } = useContext(ProgressContext)
+  const { theme } = useContext(ThemeContext)
 
   //state
   const [position, setPosition] = useState("Full-stack Developer")
@@ -28,15 +34,22 @@ export default function NavBar() {
   }>) => setPosition(event.target.value as string)
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color={theme}>
       <Toolbar>
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
           width={1}
+          py={1}
         >
-          <Typography variant="h6">My movie</Typography>
+          <Box>
+            <Typography variant="h6">My movie</Typography>
+            <Box>
+              <Chip label={`Last updated: ${lastTime}- Status: ${status}`} />
+            </Box>
+          </Box>
+
           <Box textAlign="center">
             <WelcomeMessage position={position} />
             <Box>
@@ -53,7 +66,7 @@ export default function NavBar() {
               </FormControl>
             </Box>
           </Box>
-          <Box textAlign="center" py={1}>
+          <Box textAlign="center">
             <Typography variant="h6">{time.toString()}</Typography>
             <Button variant="contained">Login</Button>
           </Box>
