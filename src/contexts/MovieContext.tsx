@@ -27,7 +27,8 @@ export default function MovieProvider({ children }: MovieProviderProps) {
   const addMovie = (title: string) => setMovies([...movies, { id: v4(), title }])
   const deleteMovie = (id: string) => {
     const idx = movies.findIndex(movie => movie.id === id)
-    const newMovies = [...movies].splice(idx, 1)
+    const newMovies = [...movies]
+    newMovies.splice(idx, 1)
     setMovies(newMovies)
   }
 

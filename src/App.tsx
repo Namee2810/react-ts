@@ -1,3 +1,4 @@
+import Movies from "components/Movies"
 import ToggleThemeButton from "components/ToggleThemeButton"
 import MovieProvider from "contexts/MovieContext"
 import ThemeProvider from "contexts/ThemeContext"
@@ -10,6 +11,7 @@ export default function App() {
       <MovieProvider>
         <ProgressProvider>
           <NavBar />
+          <Movies />
           <ToggleThemeButton />
         </ProgressProvider>
       </MovieProvider>
