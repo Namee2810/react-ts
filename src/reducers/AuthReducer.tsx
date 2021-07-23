@@ -1,5 +1,7 @@
 import { AuthActionType } from "./types"
 
+const { TOGGLE_AUTH } = AuthActionType
+
 export interface AuthState {
   isAuthenticated: boolean
   user: string
@@ -11,5 +13,13 @@ export interface AuthAction {
 }
 
 export const authReducer = (state: AuthState, action: AuthAction) => {
-  return state
+  switch (action.type) {
+    case TOGGLE_AUTH:
+      return {
+        ...state,
+        isAuthenticated: !state.isAuthenticated,
+        user: action.payload
+      }
+    default: return state
+  }
 }

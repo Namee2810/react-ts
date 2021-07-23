@@ -1,3 +1,3 @@
 export enum AuthActionType {
-  TOOGLE_AUTH = "TOOGLE_AUTH"
+  TOGGLE_AUTH = "TOOGLE_AUTH"
 }

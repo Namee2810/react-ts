@@ -12,7 +12,7 @@ interface AuthContextDefault {
 
 const authDefault = {
   isAuthenticated: false,
-  user: "string"
+  user: ""
 }
 
 export const AuthContext = createContext<AuthContextDefault>({
@@ -24,7 +24,7 @@ export default function AuthProvider({ children }: AuthContextProps) {
   const [authInfo, dispatch] = useReducer(authReducer, authDefault)
 
   const toggleAuth = (user: string) => dispatch({
-    type: AuthActionType.TOOGLE_AUTH,
+    type: AuthActionType.TOGGLE_AUTH,
     payload: user
   })
 

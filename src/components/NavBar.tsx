@@ -1,7 +1,9 @@
 import { AppBar, Box, Button, Chip, createStyles, FormControl, makeStyles, MenuItem, Select, Theme, Toolbar, Typography } from "@material-ui/core"
+import { AuthContext } from "contexts/AuthContext"
 import { ProgressContext } from "contexts/ProgressContext"
 import { ThemeContext } from "contexts/ThemeContext"
 import React, { useContext, useEffect, useState } from "react"
+import Login from "./Login"
 import WelcomeMessage from "./WelcomeMessage"
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -18,10 +20,12 @@ export default function NavBar() {
   //context
   const { lastTime, status } = useContext(ProgressContext)
   const { theme } = useContext(ThemeContext)
+  const { authInfo: { isAuthenticated }, toggleAuth } = useContext(AuthContext)
 
   //state
   const [position, setPosition] = useState("Full-stack Developer")
   const [time, setTime] = useState<Date>(() => new Date())
+  const [loginOpen, setLoginOpen] = useState(false)
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000)
@@ -68,8 +72,17 @@ export default function NavBar() {
           </Box>
           <Box textAlign="center">
             <Typography variant="h6">{time.toString()}</Typography>
-            <Button variant="contained">Login</Button>
+            <Button
+              variant="contained"
+              onClick={isAuthenticated ? toggleAuth.bind(null, "") : setLoginOpen.bind(null, true)}
+            >
+              {isAuthenticated ? "Logout" : "Login"}
+            </Button>
           </Box>
+          <Login
+            open={loginOpen}
+            onClose={setLoginOpen}
+          />
         </Box>
       </Toolbar>
     </AppBar>
